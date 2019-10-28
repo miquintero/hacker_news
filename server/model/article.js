@@ -4,8 +4,12 @@ const mongoose = require('./index.js');
 const Schema = mongoose.Schema;
 
 const ArticleSchema = new Schema({
-  'hits': [{}]
+  hits: {
+    type: String, 
+    required: true
+  }, 
 });
 
-module.exports = mongoose.model('article', ArticleSchema);
+const Article = mongoose.model('article', ArticleSchema);
 
+module.exports = Article;
