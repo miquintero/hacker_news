@@ -2,12 +2,10 @@
 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/db_articles', {
-  useNewUrlParser: true, 
+mongoose.connect('mongodb://localhost/articles_db', { useNewUrlParser: true }, (err) => {
+  if (err) return console.log(err); // eslint-disable-line no-console
 });
 
-const connection = mongoose.connection
-
-connection.on('open', () => console.log('Mongoose DB server is running!'));
+mongoose.connection.on('open', () => console.log('Mongoose DB server is running!'));
 
 module.exports = mongoose;
