@@ -22,26 +22,21 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          {
-            loader: 'css-loader',
-          }, 
-          {
-            loader: 'postcss-loader'
-          },
-          {
-            loader: 'sass-loader',
+          { loader: MiniCssExtractPlugin.loader},
+          { loader: 'css-loader' }, 
+          { loader: 'postcss-loader' },
+          { loader: 'sass-loader',
             options: {
               implementation: require('sass')
             }
           } 
         ]
-      }
+      }, 
     ]
   }, 
-  resolve: { extensions: ["*", ".js", ".jsx"] },
+  resolve: { 
+    extensions: ["*", ".js", ".jsx"] 
+  },
   output: {
     path: path.resolve(__dirname, 'dist/'), 
     filename: 'bundle.js',
@@ -60,7 +55,7 @@ module.exports = {
       template: './public/index.html'
     }),
     new MiniCssExtractPlugin({
-      filename: 'bundle.css'
+      filename: './dist/bundle.css'
     }), 
     new webpack.HotModuleReplacementPlugin()
   ],
