@@ -13,7 +13,6 @@ const url = 'http://localhost:3003';
 function ArticleList () {
 
   const [articles, setArticles] = useState('');
-  const [deletion, setDeletion] = useState(true);
 
   const getArticles = async () => {
     return axios.get(
@@ -49,15 +48,6 @@ function ArticleList () {
     const filtered = articles.filter(article => article.objectID !== objectID);
     setArticles(filtered);
   };
-  
-  const callOnce = () => {
-    if (deletion) {
-      setDeletion(false);
-      getArticles();
-    }
-  }
-
-  callOnce();
 
   const articleList = 
     articles
