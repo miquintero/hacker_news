@@ -7,14 +7,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 
 import './ArticleList.scss';
-import usePrevious from '../../utils/compareState';
 
 const url = 'http://localhost:3003';
 
 function ArticleList () {
 
   const [articles, setArticles] = useState('');
-  const [hasDeleted, setDeletion] = useState(false);
+  const [deletion, setDeletion] = useState(true);
 
   const getArticles = async () => {
     return axios.get(
@@ -22,10 +21,8 @@ function ArticleList () {
         headers: { 'Content-Type': 'application/json' }
       })
       .then(response => {
-        if(hasDeleted === false) {
           const articles = response.data.hits.filter(article => article.title || article.story_title);
           setArticles(articles);
-        } 
       })
       .catch(error => console.log('Error:', error));
     };
@@ -33,24 +30,38 @@ function ArticleList () {
   const getDate = (timeStamp) => { 
     const stringDate = Date.parse(timeStamp); 
     const formattedDate = new Date(stringDate * 1000); 
-    const time = formattedDate.toUTCString().slice(18, 23);
+    const utcTime = formattedDate.toUTCString()
+    const time = utcTime.slice(18, 23);
+    const day = utcTime.slice(0, 2);
     const timeArray = time.split(":");
+    const currentDay = new Date().toString().slice(0, 2);
     let twelveHour = 'am';
     if (timeArray[0] >= 12) twelveHour = 'pm';
     if (timeArray[0] > 12) timeArray[0] = timeArray[0] - 12;
-   return `${timeArray[0]}:${timeArray[1]} ${twelveHour}`;
+    if (day === currentDay) {
+      return `${timeArray[0]}:${timeArray[1]} ${twelveHour}`
+    } else {
+      return 'Yesterday';
+    }
   }; 
 
   const handleDelete = objectID => {
     const filtered = articles.filter(article => article.objectID !== objectID);
     setArticles(filtered);
-    setDeletion(true);
   };
+  
+  const callOnce = () => {
+    if (deletion) {
+      setDeletion(false);
+      getArticles();
+    }
+  }
+
+  callOnce();
 
   const articleList = 
     articles
     ? articles
-    .sort((a, b) => a.created_at - b.created_at)
     .map(article => (
     <div button key={uniqueId.time()}>  
       <div className='item'>
@@ -71,11 +82,8 @@ function ArticleList () {
     </div>  
     ))
     : <div>Loading</div>;
-    
-    const prevState = usePrevious(articles);
-    
+        
     useEffect(() => {
-      if (prevState === articles) getArticles();
       const filtered = localStorage.getItem('article-list');
       if(filtered) setArticles(JSON.parse(filtered));
     }, []);
