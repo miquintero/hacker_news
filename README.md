@@ -9,7 +9,7 @@ To run the app Hacker News follow the instructions below.
 Begin by forking this repository, and cloning it to your computer with the following command: 
 
  ```bash
-   git clone https://github.com/jonas-wedemeyer/envolution-server.git
+   git clone https://github.com/miquintero/hacker_news.git
  ```
 
 #### Server
@@ -45,7 +45,7 @@ In another terminal window connect to the database:
 
 2. In your browser navigate to `localhost:3001`
 
-## Tech Stack
+### Tech Stack
 
 * Express
 * MongoDB and Mongoose
