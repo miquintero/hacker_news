@@ -48,6 +48,7 @@ In another terminal window connect to the database:
 ### Tech Stack
 
 * Express
-* MongoDB and Mongoose
+* MongoDB 
+* React
 * Webpack
 * Material UI
