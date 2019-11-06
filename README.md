@@ -43,8 +43,6 @@ In another terminal window connect to the database:
   webpack-dev-server
  ```
 
-2. The local storage with data from the database will be populated for the first time with `getArticles();`. Once client is running delete this function call on line 76 of Article.js in 'client/src/components/ArticleList/ArticleList.'
-
 2. In your browser navigate to `localhost:3001`
 
 ### Tech Stack
